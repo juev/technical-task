@@ -91,9 +91,8 @@ impl Element {
     // Восстановление элемента из истории по его номеру, начинаем с 1
     #[allow(dead_code)]
     fn rollback(&mut self, version: usize) {
-        match self.vec.get(version - 1) {
-            Some(v) => self.elem = v.clone(),
-            None => (),
+        if let Some(v) = self.vec.get(version - 1) {
+            self.elem = v.clone()
         };
     }
 
@@ -102,9 +101,8 @@ impl Element {
     fn prune(&mut self) {
         let e = self.vec.last().cloned();
         self.vec.clear();
-        match e {
-            Some(el) => self.vec.push(el.clone()),
-            None => (),
+        if let Some(el) = e {
+            self.vec.push(el)
         }
     }
 }
